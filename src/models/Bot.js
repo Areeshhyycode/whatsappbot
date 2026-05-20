@@ -19,6 +19,14 @@ const ChunkSchema = new mongoose.Schema(
  */
 const BotSchema = new mongoose.Schema(
   {
+    // Which user owns this bot — they are the only one who can see/use it.
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
+    },
+
     name: { type: String, required: true, trim: true },
 
     // What kind of bot this is — just a label for now.

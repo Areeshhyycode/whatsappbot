@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { extractText } from "@/lib/extract";
+import { getAuthUser } from "@/lib/auth";
 
 // pdf-parse needs the Node.js runtime (not the Edge runtime).
 export const runtime = "nodejs";
@@ -12,6 +13,11 @@ export const dynamic = "force-dynamic";
  */
 export async function POST(req) {
   try {
+    const user = await getAuthUser();
+    if (!user) {
+      return NextResponse.json({ error: "Please log in." }, { status: 401 });
+    }
+
     const form = await req.formData();
     const file = form.get("file");
 

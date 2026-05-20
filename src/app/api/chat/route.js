@@ -3,6 +3,7 @@ import { connectDB } from "@/lib/mongodb";
 import Bot from "@/models/Bot";
 import { askAI } from "@/lib/groq";
 import { retrieveContext } from "@/lib/rag";
+import { getAuthUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -15,6 +16,11 @@ export const runtime = "nodejs";
  */
 export async function POST(req) {
   try {
+    const user = await getAuthUser();
+    if (!user) {
+      return NextResponse.json({ error: "Please log in." }, { status: 401 });
+    }
+
     const { botId, message } = await req.json();
 
     if (!botId || !message || !message.trim()) {
@@ -25,7 +31,8 @@ export async function POST(req) {
     }
 
     await connectDB();
-    const bot = await Bot.findById(botId).lean();
+    // The owner filter makes sure users can only chat with their own bots.
+    const bot = await Bot.findOne({ _id: botId, owner: user.uid }).lean();
     if (!bot) {
       return NextResponse.json({ error: "Bot not found." }, { status: 404 });
     }

@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@huggingface/transformers": "^4.2.0",
+    "bcryptjs": "^3.0.3",
     "dotenv": "^17.4.2",
     "groq-sdk": "^1.2.0",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.6.2",
     "next": "^16.2.6",
     "pdf-parse": "^2.4.5",

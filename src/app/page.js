@@ -29,10 +29,28 @@ export default function Home() {
   const [chatInput, setChatInput] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
 
-  // Load the list of bots when the page opens.
+  // --- auth state ---
+  const [authChecked, setAuthChecked] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
+  // On load: find out who is logged in. If nobody, go to the login page.
   useEffect(() => {
-    loadBots();
+    fetch("/api/auth/me")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        setUserEmail(data.user.email);
+        setAuthChecked(true);
+        loadBots();
+      })
+      .catch(() => {
+        window.location.href = "/login";
+      });
   }, []);
+
+  async function logout() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    window.location.href = "/login";
+  }
 
   async function loadBots() {
     try {
@@ -152,11 +170,26 @@ export default function Home() {
     }
   }
 
+  // Wait until we know the login state, so the UI does not flash.
+  if (!authChecked) {
+    return <p style={{ padding: 40, textAlign: "center" }}>Loading…</p>;
+  }
+
   return (
     <>
       <header className="header">
-        <h1>🤖 WhatsApp AI Bot Builder</h1>
-        <p>Upload a document, create a bot, and chat with it — powered by Groq AI.</p>
+        <div>
+          <h1>🤖 WhatsApp AI Bot Builder</h1>
+          <p>
+            Upload a document, create a bot, and chat with it — powered by Groq AI.
+          </p>
+        </div>
+        <div className="user-box">
+          <span>{userEmail}</span>
+          <button className="btn btn-small btn-ghost" onClick={logout}>
+            Log out
+          </button>
+        </div>
       </header>
 
       <main className="container">

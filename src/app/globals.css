@@ -25,6 +25,11 @@ body {
   background: var(--green-dark);
   color: #fff;
   padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 .header h1 {
   font-size: 22px;
@@ -32,6 +37,23 @@ body {
 .header p {
   font-size: 14px;
   opacity: 0.85;
+}
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.user-box .btn {
+  margin-top: 0;
+}
+.user-box .btn-ghost {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.user-box .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
 }
 
 .container {
@@ -67,6 +89,8 @@ label {
 }
 
 input[type="text"],
+input[type="email"],
+input[type="password"],
 textarea,
 select {
   width: 100%;
@@ -220,4 +244,29 @@ select:focus {
   color: var(--muted);
   text-align: center;
   padding: 20px 0;
+}
+
+/* --- login / signup page --- */
+.auth-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+}
+.auth-card h1 {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+.auth-card .btn {
+  width: 100%;
+}
+.link {
+  color: var(--green-dark);
+  cursor: pointer;
+  font-weight: 600;
 }
