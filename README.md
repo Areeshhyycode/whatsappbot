@@ -24,6 +24,7 @@ This is a **learning project** built in clear, commented steps.
 | Database        | MongoDB (via Mongoose)              |
 | AI answers      | Groq API — `llama-3.3-70b-versatile`|
 | PDF reading     | `pdf-parse`                         |
+| Search (RAG)    | `@huggingface/transformers` (local embeddings) |
 | WhatsApp        | `whatsapp-web.js`                   |
 
 ---
@@ -98,29 +99,35 @@ Now message that number and the bot replies!
 
 ---
 
-## 🧠 How it works
+## 🧠 How it works (RAG)
+
+The bot uses **RAG** — Retrieval-Augmented Generation:
 
 ```
-Website  ──>  /api/upload  ──>  extract text from PDF
-         ──>  /api/bots    ──>  save bot + text in MongoDB
-         ──>  /api/chat    ──>  Groq AI answers using the text
+Creating a bot:
+  document text  ──>  split into chunks  ──>  embed each chunk
+                 ──>  store chunks + embeddings in MongoDB
 
-WhatsApp ──>  bot/index.js ──>  loads bot from MongoDB
-                              ──>  Groq AI answers ──> reply
+Answering a question:
+  question  ──>  embed it  ──>  find the most similar chunks
+            ──>  send only those chunks + question to Groq AI  ──>  reply
 ```
 
-The AI is told to answer **only** from the uploaded document.
+Embeddings turn text into numbers that capture meaning, so the bot finds the
+**relevant** parts of a large document instead of sending the whole thing.
+The embedding model runs locally (free, no API key) — the first run downloads
+it (~25 MB) and caches it afterwards. The AI answers **only** from the document.
 
 ---
 
 ## 🛣️ Roadmap (next learning steps)
 
-- **Phase 3 — real RAG:** instead of sending the whole document, split it into
-  chunks, create embeddings, and search for the most relevant pieces. This lets
-  bots use large documents accurately.
+- ✅ **Phase 3 — RAG:** done — documents are chunked, embedded and searched.
 - **Multiple bots online at once:** one WhatsApp number per bot does not scale —
   the official WhatsApp Cloud API would be the next step.
 - **User accounts:** so each person manages only their own bots.
+- **Faster search:** for very large documents, move from in-memory cosine
+  similarity to a proper vector database.
 
 ---
 

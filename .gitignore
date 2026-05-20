@@ -18,6 +18,9 @@ build/
 # uploaded files
 uploads/
 
+# downloaded AI embedding model cache
+.cache/
+
 # logs
 *.log
 npm-debug.log*

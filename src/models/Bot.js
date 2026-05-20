@@ -1,8 +1,21 @@
 import mongoose from "mongoose";
 
 /**
+ * One searchable piece of the document, with its embedding (meaning vector).
+ * `_id: false` keeps these sub-documents small.
+ */
+const ChunkSchema = new mongoose.Schema(
+  {
+    text: String,
+    embedding: [Number],
+  },
+  { _id: false }
+);
+
+/**
  * A "Bot" is one WhatsApp assistant a user has created.
- * Its "brain" is the text we extracted from the uploaded PDF/txt file.
+ * Its "brain" is the text we extracted from the uploaded PDF/txt file,
+ * split into embedded `chunks` so the AI can search it by meaning (RAG).
  */
 const BotSchema = new mongoose.Schema(
   {
@@ -24,6 +37,9 @@ const BotSchema = new mongoose.Schema(
     // The uploaded knowledge document.
     documentName: { type: String, default: "" },
     documentText: { type: String, default: "" },
+
+    // The document split into embedded chunks, used for RAG search.
+    chunks: { type: [ChunkSchema], default: [] },
   },
   { timestamps: true } // adds createdAt + updatedAt automatically
 );

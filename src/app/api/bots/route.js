@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Bot from "@/models/Bot";
+import { buildChunks } from "@/lib/rag";
 
 // This route talks to the database, so it must never be statically cached.
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+// Building embeddings can take a little while on first run (model download).
+export const maxDuration = 60;
 
 /** GET /api/bots — list every bot, newest first. */
 export async function GET() {
@@ -32,6 +36,9 @@ export async function POST(req) {
       );
     }
 
+    // Split the document into embedded chunks so the bot can search it (RAG).
+    const chunks = documentText ? await buildChunks(documentText) : [];
+
     await connectDB();
     const bot = await Bot.create({
       name: name.trim(),
@@ -39,9 +46,22 @@ export async function POST(req) {
       systemPrompt,
       documentName,
       documentText,
+      chunks,
     });
 
-    return NextResponse.json({ bot }, { status: 201 });
+    // Return a small summary (not the heavy chunk embeddings).
+    return NextResponse.json(
+      {
+        bot: {
+          _id: bot._id,
+          name: bot.name,
+          botType: bot.botType,
+          documentName: bot.documentName,
+          chunkCount: chunks.length,
+        },
+      },
+      { status: 201 }
+    );
   } catch (err) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }

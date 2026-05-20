@@ -11,6 +11,7 @@
     "bot": "node bot/index.js"
   },
   "dependencies": {
+    "@huggingface/transformers": "^4.2.0",
     "dotenv": "^17.4.2",
     "groq-sdk": "^1.2.0",
     "mongoose": "^9.6.2",

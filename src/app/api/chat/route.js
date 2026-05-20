@@ -2,8 +2,10 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Bot from "@/models/Bot";
 import { askAI } from "@/lib/groq";
+import { retrieveContext } from "@/lib/rag";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 /**
  * POST /api/chat
@@ -28,9 +30,17 @@ export async function POST(req) {
       return NextResponse.json({ error: "Bot not found." }, { status: 404 });
     }
 
+    // RAG: find the chunks most relevant to this question.
+    // Older bots created before Phase 3 have no chunks — fall back to the
+    // full document text so they still work.
+    const context =
+      bot.chunks && bot.chunks.length > 0
+        ? await retrieveContext(bot.chunks, message.trim())
+        : bot.documentText || "";
+
     const reply = await askAI({
       systemPrompt: bot.systemPrompt,
-      documentText: bot.documentText,
+      documentText: context,
       userMessage: message.trim(),
     });
 

@@ -98,7 +98,10 @@ export default function Home() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Could not create bot");
 
-      setFormMsg({ type: "success", text: `Bot "${data.bot.name}" created!` });
+      setFormMsg({
+        type: "success",
+        text: `Bot "${data.bot.name}" created with ${data.bot.chunkCount ?? 0} searchable knowledge chunks!`,
+      });
       setName("");
       setDoc(null);
       await loadBots();
