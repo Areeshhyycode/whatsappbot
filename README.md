@@ -27,7 +27,7 @@ This is a **learning project** built in clear, commented steps.
 | Accounts       | bcrypt password hashing + JWT cookie             |
 | AI answers     | Groq API — `llama-3.3-70b-versatile`             |
 | PDF reading    | `pdf-parse`                                      |
-| Embeddings     | `@huggingface/transformers` (local, free)        |
+| Embeddings     | Google `text-embedding-004` API (free)           |
 | Vector search  | MongoDB Atlas Vector Search (`$vectorSearch`)    |
 | WhatsApp       | `whatsapp-web.js` **or** WhatsApp Cloud API      |
 
@@ -72,8 +72,9 @@ Copy `.env.example` to `.env` and fill it in:
 
 ```env
 GROQ_API_KEY=...     # free — https://console.groq.com
+GOOGLE_API_KEY=...   # free — https://aistudio.google.com/apikey
 MONGODB_URI=...      # free — https://www.mongodb.com/atlas
-JWT_SECRET=...        # any long random string
+JWT_SECRET=...       # any long random string
 ```
 
 ### 3. Create the vector search index (one time)
@@ -134,11 +135,29 @@ Answering a question:
 
 Embeddings turn text into numbers that capture meaning, so the bot searches a
 large document by **meaning** and sends only the relevant parts to the AI.
-The embedding model runs locally (free, no key) — the first run downloads it
-(~25 MB) and caches it.
+Embeddings come from Google's free `text-embedding-004` API.
 
 If the Atlas index is missing, the app automatically falls back to in-memory
 cosine-similarity search, so it always works.
+
+---
+
+## 🌐 Deploy to Vercel (free)
+
+The website + API can be hosted free on Vercel.
+
+1. Push the project to GitHub (already done).
+2. In MongoDB Atlas → **Network Access**, add `0.0.0.0/0` so Vercel can
+   connect from anywhere.
+3. Go to <https://vercel.com>, sign in with GitHub, and **import** the repo.
+4. Add the environment variables (Settings → Environment Variables):
+   `GROQ_API_KEY`, `GOOGLE_API_KEY`, `MONGODB_URI`, `JWT_SECRET`
+   (and `WHATSAPP_TOKEN` / `WHATSAPP_VERIFY_TOKEN` for the Cloud API).
+5. Click **Deploy** — the site goes live at `https://your-app.vercel.app`.
+
+> The `whatsapp-web.js` worker (`npm run bot`) cannot run on Vercel — use the
+> WhatsApp Cloud API webhook for the deployed site. Run `npm run setup-index`
+> once (locally) to create the vector index on Atlas.
 
 ---
 
@@ -148,7 +167,8 @@ cosine-similarity search, so it always works.
 - ✅ **User accounts** — each user manages only their own bots.
 - ✅ **WhatsApp Cloud API** — official, webhook-based, no browser needed.
 - ✅ **Vector database** — Atlas Vector Search for large documents.
-- **Next:** deploy publicly, conversation memory, multiple documents per bot.
+- ✅ **Deployable** — runs free on Vercel.
+- **Next:** conversation memory, multiple documents per bot, a dashboard.
 
 ---
 

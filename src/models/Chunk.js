@@ -17,7 +17,7 @@ const ChunkSchema = new mongoose.Schema({
   },
   text: { type: String, required: true },
 
-  // 384 numbers from the all-MiniLM-L6-v2 embedding model.
+  // 768 numbers from Google's text-embedding-004 model.
   embedding: { type: [Number], required: true },
 });
 

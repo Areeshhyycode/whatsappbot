@@ -48,7 +48,7 @@ async function main() {
         {
           type: "vector",
           path: "embedding",
-          numDimensions: 384, // all-MiniLM-L6-v2 output size
+          numDimensions: 768, // Google text-embedding-004 output size
           similarity: "cosine",
         },
         // Lets us restrict a search to one bot's chunks.
