@@ -18,6 +18,7 @@ export default function Home() {
   const [botType, setBotType] = useState("custom");
   const [systemPrompt, setSystemPrompt] = useState(PROMPT_PRESETS.custom);
   const [doc, setDoc] = useState(null); // { fileName, charCount, text }
+  const [waPhoneId, setWaPhoneId] = useState(""); // WhatsApp Cloud API number id
   const [uploading, setUploading] = useState(false);
   const [creating, setCreating] = useState(false);
   const [formMsg, setFormMsg] = useState(null); // { type, text }
@@ -111,6 +112,7 @@ export default function Home() {
           systemPrompt,
           documentName: doc?.fileName || "",
           documentText: doc?.text || "",
+          whatsappPhoneNumberId: waPhoneId,
         }),
       });
       const data = await res.json();
@@ -122,6 +124,7 @@ export default function Home() {
       });
       setName("");
       setDoc(null);
+      setWaPhoneId("");
       await loadBots();
     } catch (err) {
       setFormMsg({ type: "error", text: err.message });
@@ -240,6 +243,19 @@ export default function Home() {
               ✔ {doc.fileName} ({doc.charCount} characters of knowledge)
             </p>
           )}
+
+          <label htmlFor="waid">WhatsApp Phone Number ID</label>
+          <input
+            id="waid"
+            type="text"
+            placeholder="optional — for the WhatsApp Cloud API"
+            value={waPhoneId}
+            onChange={(e) => setWaPhoneId(e.target.value)}
+          />
+          <p className="note">
+            Leave empty unless you connected this bot to a WhatsApp Cloud API
+            number.
+          </p>
 
           <button className="btn" onClick={onCreate} disabled={creating}>
             {creating ? "Creating…" : "Create bot"}

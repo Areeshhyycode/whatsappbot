@@ -59,3 +59,17 @@ export async function retrieveContext(chunks, question, topK = TOP_K) {
 
   return ranked.map((r) => r.text).join("\n\n---\n\n");
 }
+
+/**
+ * Get the document context for a bot answering a question.
+ *
+ * One shared place for retrieval, used by the website chat, the WhatsApp
+ * worker and the Cloud API webhook. Bots with embedded chunks use RAG;
+ * older bots fall back to their full document text.
+ */
+export async function getBotContext(bot, question) {
+  if (bot?.chunks && bot.chunks.length > 0) {
+    return retrieveContext(bot.chunks, question);
+  }
+  return bot?.documentText || "";
+}

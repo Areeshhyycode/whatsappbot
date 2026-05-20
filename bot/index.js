@@ -16,7 +16,7 @@ import qrcode from "qrcode-terminal";
 import { connectDB } from "../src/lib/mongodb.js";
 import Bot from "../src/models/Bot.js";
 import { askAI } from "../src/lib/groq.js";
-import { retrieveContext } from "../src/lib/rag.js";
+import { getBotContext } from "../src/lib/rag.js";
 
 const PREFIX = process.env.BOT_PREFIX || "!";
 const REQUIRE_PREFIX = process.env.REQUIRE_PREFIX === "true";
@@ -79,12 +79,8 @@ async function main() {
       const chat = await msg.getChat();
       await chat.sendStateTyping();
 
-      // RAG: pick the document chunks most relevant to the question.
-      // Bots created before Phase 3 have no chunks — fall back to full text.
-      const context =
-        bot.chunks && bot.chunks.length > 0
-          ? await retrieveContext(bot.chunks, question)
-          : bot.documentText || "";
+      // RAG: pick the document context most relevant to the question.
+      const context = await getBotContext(bot, question);
 
       const reply = await askAI({
         systemPrompt: bot.systemPrompt,

@@ -38,8 +38,14 @@ export async function POST(req) {
     const user = await getAuthUser();
     if (!user) return unauthorized();
 
-    const { name, botType, systemPrompt, documentName, documentText } =
-      await req.json();
+    const {
+      name,
+      botType,
+      systemPrompt,
+      documentName,
+      documentText,
+      whatsappPhoneNumberId,
+    } = await req.json();
 
     if (!name || !name.trim()) {
       return NextResponse.json(
@@ -60,6 +66,7 @@ export async function POST(req) {
       documentName,
       documentText,
       chunks,
+      whatsappPhoneNumberId: (whatsappPhoneNumberId || "").trim(),
     });
 
     // Return a small summary (not the heavy chunk embeddings).

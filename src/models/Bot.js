@@ -48,6 +48,10 @@ const BotSchema = new mongoose.Schema(
 
     // The document split into embedded chunks, used for RAG search.
     chunks: { type: [ChunkSchema], default: [] },
+
+    // WhatsApp Cloud API: the phone number id this bot answers on.
+    // Incoming webhook messages are routed to the bot with a matching id.
+    whatsappPhoneNumberId: { type: String, default: "", index: true },
   },
   { timestamps: true } // adds createdAt + updatedAt automatically
 );
