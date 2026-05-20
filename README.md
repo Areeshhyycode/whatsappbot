@@ -1,7 +1,7 @@
 # 🤖 WhatsApp AI Bot Builder
 
-A website where you upload a **PDF or text document**, create a **WhatsApp bot**, and the
-bot answers messages using that document — powered by **Groq AI** (free).
+A website where users **sign up**, upload a **PDF or text document**, and create a
+**WhatsApp bot** that answers messages from that document — powered by **Groq AI**.
 
 This is a **learning project** built in clear, commented steps.
 
@@ -9,23 +9,27 @@ This is a **learning project** built in clear, commented steps.
 
 ## ✨ What it does
 
-1. Open the website and create a bot (name, type, instructions).
-2. Upload a PDF/txt file — the site extracts the text and stores it as the bot's "brain".
-3. Test the bot in a live chat panel on the website.
-4. Run the WhatsApp worker, scan a QR code, and the bot answers real WhatsApp messages.
+1. Sign up / log in — each user only sees their own bots.
+2. Create a bot (name, type, instructions) and upload a PDF/txt file.
+3. The document is split, embedded, and stored in a vector database.
+4. Test the bot in a live chat panel on the website.
+5. Connect it to WhatsApp — either the quick way (`whatsapp-web.js`) or the
+   official **WhatsApp Cloud API**.
 
 ---
 
 ## 🧱 Tech stack
 
-| Part            | Technology                          |
-| --------------- | ----------------------------------- |
-| Website + API   | Next.js 16 (App Router)             |
-| Database        | MongoDB (via Mongoose)              |
-| AI answers      | Groq API — `llama-3.3-70b-versatile`|
-| PDF reading     | `pdf-parse`                         |
-| Search (RAG)    | `@huggingface/transformers` (local embeddings) |
-| WhatsApp        | `whatsapp-web.js`                   |
+| Part           | Technology                                       |
+| -------------- | ------------------------------------------------ |
+| Website + API  | Next.js 16 (App Router)                          |
+| Database       | MongoDB Atlas (via Mongoose)                     |
+| Accounts       | bcrypt password hashing + JWT cookie             |
+| AI answers     | Groq API — `llama-3.3-70b-versatile`             |
+| PDF reading    | `pdf-parse`                                      |
+| Embeddings     | `@huggingface/transformers` (local, free)        |
+| Vector search  | MongoDB Atlas Vector Search (`$vectorSearch`)    |
+| WhatsApp       | `whatsapp-web.js` **or** WhatsApp Cloud API      |
 
 ---
 
@@ -33,25 +37,23 @@ This is a **learning project** built in clear, commented steps.
 
 ```
 whatAppBot/
-├── .env                  # your secrets (git-ignored)
-├── .env.example          # template — copy to .env
-├── bot/
-│   └── index.js          # WhatsApp bot worker (standalone process)
+├── .env                    # your secrets (git-ignored)
+├── .env.example            # template — copy to .env
+├── bot/index.js            # WhatsApp worker (whatsapp-web.js)
+├── scripts/create-index.js # one-time: create the vector search index
 └── src/
     ├── app/
-    │   ├── page.js        # the bot builder website
-    │   ├── layout.js
-    │   ├── globals.css
+    │   ├── page.js          # the bot builder website
+    │   ├── login/page.js    # login / signup page
     │   └── api/
-    │       ├── bots/      # create / list / delete bots
-    │       ├── upload/    # extract text from a file
-    │       └── chat/      # test a bot with Groq
-    ├── lib/
-    │   ├── mongodb.js     # database connection
-    │   ├── groq.js        # AI helper
-    │   └── extract.js     # PDF / txt text extraction
-    └── models/
-        └── Bot.js         # the Bot database schema
+    │       ├── auth/        # signup, login, logout, me
+    │       ├── bots/        # create / list / delete bots
+    │       ├── upload/      # extract text from a file
+    │       ├── chat/        # test a bot with Groq
+    │       └── whatsapp/webhook/   # WhatsApp Cloud API webhook
+    ├── lib/                 # mongodb, auth, groq, extract, chunk,
+    │                        #   embeddings, rag, whatsapp
+    └── models/              # User, Bot, Chunk
 ```
 
 ---
@@ -66,72 +68,93 @@ npm install
 
 ### 2. Add your secrets
 
-Copy `.env.example` to `.env` and fill in your keys:
+Copy `.env.example` to `.env` and fill it in:
 
 ```env
-GROQ_API_KEY=your_groq_api_key      # from https://console.groq.com
-MONGODB_URI=your_mongodb_uri        # from https://www.mongodb.com/atlas
+GROQ_API_KEY=...     # free — https://console.groq.com
+MONGODB_URI=...      # free — https://www.mongodb.com/atlas
+JWT_SECRET=...        # any long random string
 ```
 
-Both services have a **free tier** — no credit card needed.
+### 3. Create the vector search index (one time)
 
-### 3. Run the website
+```bash
+npm run setup-index
+```
+
+This builds the Atlas Vector Search index. It takes about a minute.
+*(The app still works before this — it falls back to in-memory search.)*
+
+### 4. Run the website
 
 ```bash
 npm run dev
 ```
 
-Open <http://localhost:3000>, create a bot, upload a document, and test it in the chat panel.
+Open <http://localhost:3000>, sign up, create a bot, upload a document,
+and test it in the chat panel.
 
-### 4. Run the WhatsApp bot
+### 5. Connect WhatsApp
 
-In a **second terminal**:
+**Option A — quick (whatsapp-web.js):** in a second terminal:
 
 ```bash
 npm run bot
 ```
 
 Scan the QR code with WhatsApp → **Settings → Linked Devices**.
-Now message that number and the bot replies!
 
-> Use a **spare WhatsApp number** for testing. `whatsapp-web.js` is unofficial,
-> and numbers that send spam-like messages can get banned.
+> Use a **spare number**. `whatsapp-web.js` is unofficial and spam-like
+> activity can get a number banned.
+
+**Option B — official (WhatsApp Cloud API):**
+
+1. Create a free app at <https://developers.facebook.com> → add WhatsApp.
+2. Put your access token in `.env` as `WHATSAPP_TOKEN`, and pick any
+   `WHATSAPP_VERIFY_TOKEN`.
+3. Expose your local server with a tunnel (e.g. `ngrok http 3000`) and set the
+   webhook URL to `https://YOUR-URL/api/whatsapp/webhook`, using the same
+   verify token. Subscribe to the **messages** field.
+4. On the website, paste the Meta **Phone Number ID** into the bot's
+   "WhatsApp Phone Number ID" field. Incoming messages route to that bot.
 
 ---
 
-## 🧠 How it works (RAG)
-
-The bot uses **RAG** — Retrieval-Augmented Generation:
+## 🧠 How it works (RAG + vector search)
 
 ```
 Creating a bot:
-  document text  ──>  split into chunks  ──>  embed each chunk
-                 ──>  store chunks + embeddings in MongoDB
+  document  →  split into chunks  →  embed each chunk
+            →  store chunks in the "chunks" collection (vector DB)
 
 Answering a question:
-  question  ──>  embed it  ──>  find the most similar chunks
-            ──>  send only those chunks + question to Groq AI  ──>  reply
+  question  →  embed it  →  Atlas $vectorSearch finds the closest chunks
+            →  send only those chunks + question to Groq AI  →  reply
 ```
 
-Embeddings turn text into numbers that capture meaning, so the bot finds the
-**relevant** parts of a large document instead of sending the whole thing.
-The embedding model runs locally (free, no API key) — the first run downloads
-it (~25 MB) and caches it afterwards. The AI answers **only** from the document.
+Embeddings turn text into numbers that capture meaning, so the bot searches a
+large document by **meaning** and sends only the relevant parts to the AI.
+The embedding model runs locally (free, no key) — the first run downloads it
+(~25 MB) and caches it.
+
+If the Atlas index is missing, the app automatically falls back to in-memory
+cosine-similarity search, so it always works.
 
 ---
 
-## 🛣️ Roadmap (next learning steps)
+## 🛣️ Roadmap
 
-- ✅ **Phase 3 — RAG:** done — documents are chunked, embedded and searched.
-- **Multiple bots online at once:** one WhatsApp number per bot does not scale —
-  the official WhatsApp Cloud API would be the next step.
-- **User accounts:** so each person manages only their own bots.
-- **Faster search:** for very large documents, move from in-memory cosine
-  similarity to a proper vector database.
+- ✅ **RAG** — documents are chunked, embedded and searched.
+- ✅ **User accounts** — each user manages only their own bots.
+- ✅ **WhatsApp Cloud API** — official, webhook-based, no browser needed.
+- ✅ **Vector database** — Atlas Vector Search for large documents.
+- **Next:** deploy publicly, conversation memory, multiple documents per bot.
 
 ---
 
 ## ⚠️ Notes
 
-- `.env` and `.wwebjs_auth/` are git-ignored — never commit them.
+- `.env`, `.wwebjs_auth/` and `.cache/` are git-ignored — never commit them.
 - Free Groq tier has rate limits; fine for learning and small bots.
+- The WhatsApp Cloud API free tier still uses one phone number per bot — the
+  webhook just routes each number to the right bot.

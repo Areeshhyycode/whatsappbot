@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Bot from "@/models/Bot";
+import Chunk from "@/models/Chunk";
 import { buildChunks } from "@/lib/rag";
 import { getAuthUser } from "@/lib/auth";
 
@@ -54,9 +55,6 @@ export async function POST(req) {
       );
     }
 
-    // Split the document into embedded chunks so the bot can search it (RAG).
-    const chunks = documentText ? await buildChunks(documentText) : [];
-
     await connectDB();
     const bot = await Bot.create({
       owner: user.uid,
@@ -65,11 +63,26 @@ export async function POST(req) {
       systemPrompt,
       documentName,
       documentText,
-      chunks,
       whatsappPhoneNumberId: (whatsappPhoneNumberId || "").trim(),
     });
 
-    // Return a small summary (not the heavy chunk embeddings).
+    // Split the document into embedded chunks and store them in their own
+    // collection, so vector search can scale to large documents.
+    let chunkCount = 0;
+    if (documentText) {
+      const built = await buildChunks(documentText);
+      if (built.length > 0) {
+        await Chunk.insertMany(
+          built.map((c) => ({
+            bot: bot._id,
+            text: c.text,
+            embedding: c.embedding,
+          }))
+        );
+        chunkCount = built.length;
+      }
+    }
+
     return NextResponse.json(
       {
         bot: {
@@ -77,7 +90,7 @@ export async function POST(req) {
           name: bot.name,
           botType: bot.botType,
           documentName: bot.documentName,
-          chunkCount: chunks.length,
+          chunkCount,
         },
       },
       { status: 201 }
@@ -104,6 +117,8 @@ export async function DELETE(req) {
     if (!deleted) {
       return NextResponse.json({ error: "Bot not found." }, { status: 404 });
     }
+    // Also remove the bot's chunks so no orphaned data is left behind.
+    await Chunk.deleteMany({ bot: id });
     return NextResponse.json({ ok: true });
   } catch (err) {
     return NextResponse.json({ error: err.message }, { status: 500 });

@@ -8,7 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "bot": "node bot/index.js"
+    "bot": "node bot/index.js",
+    "setup-index": "node scripts/create-index.js"
   },
   "dependencies": {
     "@huggingface/transformers": "^4.2.0",
