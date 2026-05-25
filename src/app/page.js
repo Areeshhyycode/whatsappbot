@@ -87,6 +87,7 @@ export default function Home() {
   const [customCategory, setCustomCategory] = useState(""); // user's own category name
   const [systemPrompt, setSystemPrompt] = useState(PRESET_MAP.support.prompt);
   const [doc, setDoc] = useState(null); // { fileName, charCount, text }
+  const [pastedText, setPastedText] = useState(""); // alt to file upload
   const [waPhoneId, setWaPhoneId] = useState(""); // WhatsApp Cloud API number id
   const [uploading, setUploading] = useState(false);
   const [creating, setCreating] = useState(false);
@@ -186,6 +187,11 @@ export default function Home() {
           ? customCategory.trim() || "Custom"
           : PRESET_MAP[botType]?.label || "Custom";
 
+      // Use the uploaded file if present, otherwise the pasted text.
+      const effectiveText = doc?.text || pastedText.trim();
+      const effectiveName =
+        doc?.fileName || (pastedText.trim() ? "Pasted text" : "");
+
       const res = await fetch("/api/bots", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -193,8 +199,8 @@ export default function Home() {
           name,
           botType: finalBotType,
           systemPrompt,
-          documentName: doc?.fileName || "",
-          documentText: doc?.text || "",
+          documentName: effectiveName,
+          documentText: effectiveText,
           whatsappPhoneNumberId: waPhoneId,
         }),
       });
@@ -209,12 +215,18 @@ export default function Home() {
       }
       if (!res.ok) throw new Error(data.error || "Could not create bot");
 
-      setFormMsg({
-        type: "success",
-        text: `Bot "${data.bot.name}" created with ${data.bot.chunkCount ?? 0} searchable knowledge chunks!`,
-      });
+      // The server returns `warning` if the bot was saved but indexing failed.
+      if (data.warning) {
+        setFormMsg({ type: "error", text: data.warning });
+      } else {
+        setFormMsg({
+          type: "success",
+          text: `Bot "${data.bot.name}" created with ${data.bot.chunkCount ?? 0} searchable knowledge chunks!`,
+        });
+      }
       setName("");
       setDoc(null);
+      setPastedText("");
       setWaPhoneId("");
       setCustomCategory("");
       await loadBots();
@@ -350,14 +362,32 @@ export default function Home() {
             />
             {uploading && <span className="note">Reading…</span>}
           </div>
-          {doc ? (
+          {doc && (
             <p className="note" style={{ color: "#15803d", fontWeight: 600 }}>
               ✔ {doc.fileName} — {doc.charCount} characters loaded.
             </p>
-          ) : (
+          )}
+
+          <label htmlFor="pasted">
+            Or paste your document text directly
+          </label>
+          <textarea
+            id="pasted"
+            rows={5}
+            placeholder="Paste the bot's knowledge here if the file upload is acting up — this works even when uploads fail."
+            value={pastedText}
+            onChange={(e) => setPastedText(e.target.value)}
+          />
+          {pastedText.trim() && (
+            <p className="note" style={{ color: "#15803d", fontWeight: 600 }}>
+              ✔ {pastedText.length} characters of pasted text ready.
+            </p>
+          )}
+
+          {!doc && !pastedText.trim() && (
             <p className="note" style={{ color: "#b91c1c" }}>
-              ⚠️ No document attached yet. Pick a file above — wait for the
-              green "Loaded" message before clicking Create.
+              ⚠️ No knowledge attached. Upload a file above OR paste text here —
+              otherwise the bot has nothing to answer from.
             </p>
           )}
 
