@@ -148,12 +148,20 @@ export default function Home() {
       const body = new FormData();
       body.append("file", file);
       const res = await fetch("/api/upload", { method: "POST", body });
-      const data = await res.json();
+      const raw = await res.text();
+      let data = {};
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        throw new Error(
+          `Upload server returned ${res.status} (not JSON). Check the server logs.`
+        );
+      }
       if (!res.ok) throw new Error(data.error || "Upload failed");
       setDoc(data);
       setFormMsg({
         type: "success",
-        text: `Loaded "${data.fileName}" — ${data.charCount} characters.`,
+        text: `✔ Loaded "${data.fileName}" — ${data.charCount} characters.`,
       });
     } catch (err) {
       setDoc(null);
@@ -342,9 +350,14 @@ export default function Home() {
             />
             {uploading && <span className="note">Reading…</span>}
           </div>
-          {doc && (
-            <p className="note">
-              ✔ {doc.fileName} ({doc.charCount} characters of knowledge)
+          {doc ? (
+            <p className="note" style={{ color: "#15803d", fontWeight: 600 }}>
+              ✔ {doc.fileName} — {doc.charCount} characters loaded.
+            </p>
+          ) : (
+            <p className="note" style={{ color: "#b91c1c" }}>
+              ⚠️ No document attached yet. Pick a file above — wait for the
+              green "Loaded" message before clicking Create.
             </p>
           )}
 
