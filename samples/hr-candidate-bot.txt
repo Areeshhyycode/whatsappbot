@@ -1,157 +1,169 @@
 HR Bot — Candidate Handling Knowledge Base
+Zero Vertical Lab
 ==========================================
 
 ABOUT THE COMPANY
 -----------------
-[Your Company Name] is a [type of company] based in [City, Country]. We are a
-team of [number] people working on [what you do]. Learn more at [website].
+Zero Vertical Lab is a software house based in Karachi, Pakistan. We are a
+team of 10–30 people building mobile and web applications for clients
+around the world.
+
+LinkedIn: https://www.linkedin.com/company/zerovertical-labs
+Office: Sindh Muslim Cooperative Housing Society (SMCHS), Karachi.
+  (The full address is shared after your interview is confirmed.)
 
 
-CURRENT OPEN POSITIONS
-----------------------
-1. Software Engineer (Frontend) — React, TypeScript. Hybrid in [City].
-2. Software Engineer (Backend) — Node.js, MongoDB. Remote allowed.
-3. UI/UX Designer — Figma, user research. Hybrid in [City].
-4. Marketing Executive — Social media, content writing. Onsite in [City].
-5. HR Intern — 6-month internship, learn end-to-end recruitment. Onsite.
+CURRENT OPENING — MERN STACK INTERNSHIP (PAID, ONSITE)
+------------------------------------------------------
+We are hiring MERN Stack Interns to work on real client projects.
+
+What you will work on:
+- Frontend development (React.js)
+- Backend development (Node.js, Express.js, MongoDB)
+- Both web and mobile application projects
+- Real-world workflows, modern development practices and team collaboration
+
+Internship details:
+- Type: Onsite Paid Internship
+- Stipend: PKR 15,000 / month
+- Tech Stack: MERN (MongoDB, Express.js, React.js, Node.js)
+- Domain: Web & Mobile Applications
+
+Available shifts (pick one):
+- Morning Shift: 11:00 AM – 7:00 PM
+- Evening Shift: 6:00 PM – 2:00 AM
 
 
 HOW TO APPLY
 ------------
-1. Send your CV and a short cover note to careers@[yourcompany].com.
-2. Put the role name in the email subject line.
-3. Make sure your CV has your latest contact info and a LinkedIn link.
-4. Portfolio links (GitHub, Behance, Dribbble) are very welcome.
+1. Share your updated CV right here on WhatsApp.
+2. Mention which shift suits you (Morning or Evening).
+3. Confirm you are okay with onsite work in SMCHS, Karachi.
+4. Our HR team will get back to you to schedule the interview.
 
 
-WHAT HAPPENS AFTER YOU APPLY
-----------------------------
-- Within 5 working days, our HR team reviews your application.
-- If shortlisted, we send an email with the next step.
-- If not shortlisted, we still send a reply so you are not left waiting.
+INTERVIEW PROCESS
+-----------------
+Stage 1 — Online interview on Google Meet
+  - HR (Areesha) sends you a Google Meet link.
+  - Camera ON is MANDATORY during the interview.
+  - We chat about your background, your projects, and answer your questions.
+
+Stage 2 — Short technical discussion
+  - Basics of JavaScript, React, Node.js and MongoDB.
+  - We care about how you think more than perfect syntax.
+
+Stage 3 — Onsite visit / final round
+  - You visit our SMCHS office, meet the team, and we confirm mutual fit.
+
+If selected, you start on a mutually agreed date.
 
 
-OUR INTERVIEW PROCESS (TYPICAL)
--------------------------------
-Stage 1 — HR Screening (20 minutes, phone or WhatsApp call)
-  We get to know you, your background, and answer your questions.
-
-Stage 2 — Technical / Skill Round (45–60 minutes, online)
-  Role-specific. For engineers, a coding problem or take-home task.
-  For designers, a portfolio walkthrough. For marketing, a brief task.
-
-Stage 3 — Team Interview (45 minutes, online or onsite)
-  Meet your potential teammates and your manager.
-
-Stage 4 — Final Round with Leadership (30 minutes)
-  Discuss your goals, ours, and check mutual fit.
-
-Total time end-to-end: usually 2 to 3 weeks.
+WHAT TO BRING / PREPARE FOR THE INTERVIEW
+-----------------------------------------
+- Updated CV (PDF preferred)
+- Links to your GitHub or any portfolio / past projects
+- A working camera + stable internet for the online stage
+- A government-issued ID — only at the onsite stage
 
 
-DOCUMENTS WE ASK FOR
---------------------
-- Updated CV / resume (PDF)
-- Government-issued ID (CNIC / passport) — only if shortlisted
-- Last 2 salary slips — only at the offer stage (optional)
-- 2 professional references — only at the offer stage
-
-
-SALARY AND BENEFITS
--------------------
-- Salary is based on experience and the role's market range.
-- We pay competitively for our market. Exact numbers are shared after Stage 2.
-- Benefits include health insurance, annual bonus, 20 paid leaves per year,
-  a learning budget, and flexible working hours.
-- Remote roles include a small home-office stipend.
-
-
-REMOTE / HYBRID / ONSITE
-------------------------
-- Engineering: remote-friendly across [country], or hybrid 2 days/week.
-- Design, marketing, HR: hybrid in [City], 3 days/week onsite.
-- We are NOT hiring fully outside [country] at this time.
-
-
-OFFICE LOCATION AND TIMINGS
----------------------------
-- Office: [Full Address]
-- Working hours: 9:00 AM to 6:00 PM, Monday to Friday
-- Friday is half-day onsite (we go home at 2:00 PM).
+WHAT WE LOOK FOR IN A MERN INTERN
+---------------------------------
+- Comfortable with JavaScript fundamentals
+- Some hands-on experience with React (even a small project counts)
+- Basic understanding of Node.js / Express / REST APIs
+- Familiarity with MongoDB or any database
+- Eagerness to learn, take ownership and work in a team
+- No years-of-experience requirement — freshers are welcome
 
 
 COMMON CANDIDATE QUESTIONS
 --------------------------
 
-Q: I applied last week. When will I hear back?
-A: HR replies within 5 working days. If it has been longer, email
-   careers@[yourcompany].com with your name and the role.
+Q: Is the internship paid?
+A: Yes — the stipend is PKR 15,000 per month.
 
-Q: Can I apply for more than one role?
-A: Yes — but apply separately for each role, with a note on why each fits.
+Q: Is the internship onsite or remote?
+A: Fully onsite at our SMCHS office in Karachi.
 
-Q: Do you sponsor visas or relocation?
-A: For senior engineering roles only, decided case by case.
+Q: What are the working hours?
+A: You can pick one shift — Morning (11:00 AM – 7:00 PM) or Evening
+   (6:00 PM – 2:00 AM).
 
-Q: What is the dress code for the interview?
-A: Business casual. No need for a suit. Be comfortable.
+Q: How long is the internship?
+A: It is a 6-month onsite internship.
 
-Q: Can the interview be over Zoom or Google Meet?
-A: Yes — all early-stage interviews are online. We use Google Meet.
+Q: What tech stack will I work on?
+A: MERN Stack — MongoDB, Express.js, React.js and Node.js. You will build
+   both web and mobile applications.
 
-Q: I have a 1-month notice period. Is that okay?
-A: Yes, that is normal. Please mention it in your interview so we can plan.
+Q: I am a fresher with no work experience. Can I apply?
+A: Yes — the internship is designed exactly for that. Share any small
+   projects, coursework or GitHub links to stand out.
 
-Q: Are there any internships available?
-A: Yes, we hire 2–3 interns per year in HR and Engineering. See the open
-   positions list above.
-
-Q: I am a fresher with no experience. Can I apply?
-A: Yes — for our intern and entry-level roles. Mention projects, courses or
-   open-source contributions to stand out.
-
-Q: How do I prepare for the technical round?
-A: Brush up on the basics for the role. We care more about how you think
-   than perfect syntax. For coding rounds, no need to memorize algorithms.
-
-Q: I missed my scheduled interview. What now?
-A: Email careers@[yourcompany].com as soon as possible to reschedule.
-   We usually offer one reschedule.
-
-Q: Can I get feedback if I am rejected?
-A: After a final-round rejection, yes — we send a short note with one or two
-   points to help your next attempts.
+Q: How do I apply?
+A: Share your CV right here on WhatsApp and tell us which shift suits you.
 
 Q: Where is the office?
-A: [Full Address]. The nearest landmark is [Landmark].
+A: Sindh Muslim Cooperative Housing Society (SMCHS), Karachi. The full
+   address is shared once your interview is confirmed.
 
-Q: Do you hire part-time?
-A: Only for design and marketing on a contract basis, occasionally.
+Q: Will the interview be online or onsite?
+A: The first interview is online over Google Meet. Camera ON is mandatory.
 
-Q: Will I be paid for the take-home task?
-A: Take-home tasks are short (under 4 hours) and unpaid; longer paid tasks
-   are sometimes offered for senior roles.
+Q: What should I prepare for the interview?
+A: Brush up on JavaScript basics, React fundamentals, Node.js / Express,
+   and MongoDB. Be ready to talk about any project you have built.
+
+Q: I missed the scheduled interview. Can I reschedule?
+A: Yes — please message back here on WhatsApp as soon as possible and we
+   will offer a new slot.
+
+Q: Will the internship convert into a full-time job?
+A: Top-performing interns are offered full-time roles after the internship.
+   This is decided based on your performance.
+
+Q: Do I need to bring my own laptop?
+A: Not required for the interview. For the internship, a laptop is helpful
+   but not mandatory.
+
+Q: Can I do the internship part-time alongside university?
+A: Only if your timings match one of our shifts. We do not allow custom
+   timings during the internship.
+
+Q: Is there any application fee?
+A: No. We NEVER ask for any payment to apply or interview. Please report
+   anyone asking for money in our name.
+
+Q: Will I get a certificate at the end?
+A: Yes — an internship completion certificate, plus a recommendation letter
+   for strong performers.
+
+Q: Who is my contact person at HR?
+A: Areesha from the HR team handles candidate communication.
+
+Q: Do you sponsor visas or relocation?
+A: Not at this time. The internship is onsite in Karachi only.
 
 
 CONTACTING US
 -------------
-For application status:   careers@[yourcompany].com
-For HR queries:           hr@[yourcompany].com
-WhatsApp HR line:         [+92-xxx-xxxxxxx]
-Office phone:             [+92-xxx-xxxxxxx]
-LinkedIn:                 linkedin.com/company/[yourcompany]
+WhatsApp (this chat) — for application status and quick questions
+LinkedIn: https://www.linkedin.com/company/zerovertical-labs
+HR Contact Person: Areesha
+Office: SMCHS, Karachi (full address shared after interview confirmation)
 
 
 CODE OF CONDUCT
 ---------------
 - We treat every candidate with respect and confidentiality.
 - We NEVER ask for any payment to apply or interview. If anyone claiming to
-  be from us asks for money, it is a scam — please report it.
-- Equal opportunity: we hire based on skills and fit, regardless of gender,
-  religion, ethnicity or background.
+  be from Zero Vertical Lab asks for money, it is a scam — please report it.
+- Equal opportunity: we hire based on skills and attitude, regardless of
+  gender, religion, ethnicity or background.
 
 
 THANK YOU
 ---------
-Thank you for considering [Your Company Name]. We try to reply to every
+Thank you for considering Zero Vertical Lab. We try to reply to every
 candidate respectfully — even when the answer is "not this time".
