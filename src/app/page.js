@@ -190,7 +190,15 @@ export default function Home() {
           whatsappPhoneNumberId: waPhoneId,
         }),
       });
-      const data = await res.json();
+      const raw = await res.text();
+      let data = {};
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        throw new Error(
+          `Server returned ${res.status} (not JSON). Usually means a missing env var on Vercel or a timeout. Check the function logs.`
+        );
+      }
       if (!res.ok) throw new Error(data.error || "Could not create bot");
 
       setFormMsg({
@@ -239,7 +247,13 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ botId: activeBot._id, message }),
       });
-      const data = await res.json();
+      const raw = await res.text();
+      let data = {};
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        data = { error: `Server returned ${res.status} (not JSON)` };
+      }
       const reply = res.ok ? data.reply : `⚠️ ${data.error}`;
       setChat((c) => [...c, { role: "bot", text: reply }]);
     } catch (err) {
