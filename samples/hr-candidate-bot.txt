@@ -1,0 +1,157 @@
+HR Bot — Candidate Handling Knowledge Base
+==========================================
+
+ABOUT THE COMPANY
+-----------------
+[Your Company Name] is a [type of company] based in [City, Country]. We are a
+team of [number] people working on [what you do]. Learn more at [website].
+
+
+CURRENT OPEN POSITIONS
+----------------------
+1. Software Engineer (Frontend) — React, TypeScript. Hybrid in [City].
+2. Software Engineer (Backend) — Node.js, MongoDB. Remote allowed.
+3. UI/UX Designer — Figma, user research. Hybrid in [City].
+4. Marketing Executive — Social media, content writing. Onsite in [City].
+5. HR Intern — 6-month internship, learn end-to-end recruitment. Onsite.
+
+
+HOW TO APPLY
+------------
+1. Send your CV and a short cover note to careers@[yourcompany].com.
+2. Put the role name in the email subject line.
+3. Make sure your CV has your latest contact info and a LinkedIn link.
+4. Portfolio links (GitHub, Behance, Dribbble) are very welcome.
+
+
+WHAT HAPPENS AFTER YOU APPLY
+----------------------------
+- Within 5 working days, our HR team reviews your application.
+- If shortlisted, we send an email with the next step.
+- If not shortlisted, we still send a reply so you are not left waiting.
+
+
+OUR INTERVIEW PROCESS (TYPICAL)
+-------------------------------
+Stage 1 — HR Screening (20 minutes, phone or WhatsApp call)
+  We get to know you, your background, and answer your questions.
+
+Stage 2 — Technical / Skill Round (45–60 minutes, online)
+  Role-specific. For engineers, a coding problem or take-home task.
+  For designers, a portfolio walkthrough. For marketing, a brief task.
+
+Stage 3 — Team Interview (45 minutes, online or onsite)
+  Meet your potential teammates and your manager.
+
+Stage 4 — Final Round with Leadership (30 minutes)
+  Discuss your goals, ours, and check mutual fit.
+
+Total time end-to-end: usually 2 to 3 weeks.
+
+
+DOCUMENTS WE ASK FOR
+--------------------
+- Updated CV / resume (PDF)
+- Government-issued ID (CNIC / passport) — only if shortlisted
+- Last 2 salary slips — only at the offer stage (optional)
+- 2 professional references — only at the offer stage
+
+
+SALARY AND BENEFITS
+-------------------
+- Salary is based on experience and the role's market range.
+- We pay competitively for our market. Exact numbers are shared after Stage 2.
+- Benefits include health insurance, annual bonus, 20 paid leaves per year,
+  a learning budget, and flexible working hours.
+- Remote roles include a small home-office stipend.
+
+
+REMOTE / HYBRID / ONSITE
+------------------------
+- Engineering: remote-friendly across [country], or hybrid 2 days/week.
+- Design, marketing, HR: hybrid in [City], 3 days/week onsite.
+- We are NOT hiring fully outside [country] at this time.
+
+
+OFFICE LOCATION AND TIMINGS
+---------------------------
+- Office: [Full Address]
+- Working hours: 9:00 AM to 6:00 PM, Monday to Friday
+- Friday is half-day onsite (we go home at 2:00 PM).
+
+
+COMMON CANDIDATE QUESTIONS
+--------------------------
+
+Q: I applied last week. When will I hear back?
+A: HR replies within 5 working days. If it has been longer, email
+   careers@[yourcompany].com with your name and the role.
+
+Q: Can I apply for more than one role?
+A: Yes — but apply separately for each role, with a note on why each fits.
+
+Q: Do you sponsor visas or relocation?
+A: For senior engineering roles only, decided case by case.
+
+Q: What is the dress code for the interview?
+A: Business casual. No need for a suit. Be comfortable.
+
+Q: Can the interview be over Zoom or Google Meet?
+A: Yes — all early-stage interviews are online. We use Google Meet.
+
+Q: I have a 1-month notice period. Is that okay?
+A: Yes, that is normal. Please mention it in your interview so we can plan.
+
+Q: Are there any internships available?
+A: Yes, we hire 2–3 interns per year in HR and Engineering. See the open
+   positions list above.
+
+Q: I am a fresher with no experience. Can I apply?
+A: Yes — for our intern and entry-level roles. Mention projects, courses or
+   open-source contributions to stand out.
+
+Q: How do I prepare for the technical round?
+A: Brush up on the basics for the role. We care more about how you think
+   than perfect syntax. For coding rounds, no need to memorize algorithms.
+
+Q: I missed my scheduled interview. What now?
+A: Email careers@[yourcompany].com as soon as possible to reschedule.
+   We usually offer one reschedule.
+
+Q: Can I get feedback if I am rejected?
+A: After a final-round rejection, yes — we send a short note with one or two
+   points to help your next attempts.
+
+Q: Where is the office?
+A: [Full Address]. The nearest landmark is [Landmark].
+
+Q: Do you hire part-time?
+A: Only for design and marketing on a contract basis, occasionally.
+
+Q: Will I be paid for the take-home task?
+A: Take-home tasks are short (under 4 hours) and unpaid; longer paid tasks
+   are sometimes offered for senior roles.
+
+
+CONTACTING US
+-------------
+For application status:   careers@[yourcompany].com
+For HR queries:           hr@[yourcompany].com
+WhatsApp HR line:         [+92-xxx-xxxxxxx]
+Office phone:             [+92-xxx-xxxxxxx]
+LinkedIn:                 linkedin.com/company/[yourcompany]
+
+
+CODE OF CONDUCT
+---------------
+- We treat every candidate with respect and confidentiality.
+- We NEVER ask for any payment to apply or interview. If anyone claiming to
+  be from us asks for money, it is a scam — please report it.
+- Equal opportunity: we hire based on skills and fit, regardless of gender,
+  religion, ethnicity or background.
+
+
+THANK YOU
+---------
+Thank you for considering [Your Company Name]. We try to reply to every
+candidate respectfully — even when the answer is "not this time".
