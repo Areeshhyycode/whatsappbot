@@ -69,17 +69,38 @@ export async function POST(req) {
     // Split the document into embedded chunks and store them in their own
     // collection, so vector search can scale to large documents.
     let chunkCount = 0;
+    console.log(`[bots POST] documentText length = ${documentText?.length || 0}`);
     if (documentText) {
-      const built = await buildChunks(documentText);
-      if (built.length > 0) {
-        await Chunk.insertMany(
-          built.map((c) => ({
-            bot: bot._id,
-            text: c.text,
-            embedding: c.embedding,
-          }))
+      try {
+        const built = await buildChunks(documentText);
+        console.log(`[bots POST] built ${built.length} chunks`);
+        if (built.length > 0) {
+          await Chunk.insertMany(
+            built.map((c) => ({
+              bot: bot._id,
+              text: c.text,
+              embedding: c.embedding,
+            }))
+          );
+          chunkCount = built.length;
+        }
+      } catch (e) {
+        // Don't fail the whole create — bot is already saved. Surface the
+        // reason so the UI can show it.
+        console.error(`[bots POST] chunking failed: ${e.message}`);
+        return NextResponse.json(
+          {
+            bot: {
+              _id: bot._id,
+              name: bot.name,
+              botType: bot.botType,
+              documentName: bot.documentName,
+              chunkCount: 0,
+            },
+            warning: `Bot saved but knowledge could not be indexed: ${e.message}`,
+          },
+          { status: 201 }
         );
-        chunkCount = built.length;
       }
     }
 

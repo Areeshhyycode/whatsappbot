@@ -31,6 +31,10 @@ export async function POST(req) {
     const buffer = Buffer.from(await file.arrayBuffer());
     const text = await extractText(buffer, file.name);
 
+    console.log(
+      `[upload] file="${file.name}" size=${buffer.length} extractedChars=${text?.length || 0}`
+    );
+
     if (!text) {
       return NextResponse.json(
         { error: "Could not read any text from that file." },
