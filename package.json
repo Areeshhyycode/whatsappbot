@@ -5,15 +5,14 @@
   "type": "module",
   "description": "A website to build WhatsApp bots powered by your own PDF/text documents and Groq AI",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node init && next dev",
+    "build": "node init && next build",
+    "start": "node init && next start",
     "bot": "node bot/index.js",
     "setup-index": "node scripts/create-index.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
-    "dotenv": "^17.4.2",
     "groq-sdk": "^1.2.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.6.2",
