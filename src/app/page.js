@@ -2,21 +2,90 @@
 
 import { useEffect, useState } from "react";
 
-// Suggested instructions shown depending on the bot type the user picks.
-const PROMPT_PRESETS = {
-  support:
-    "You are a friendly customer support agent. Answer questions politely using the company document.",
-  faq: "You are an FAQ assistant. Give short, clear answers based on the document.",
-  sales:
-    "You are a helpful sales assistant. Explain products from the document and encourage the customer warmly.",
-  custom: "You are a helpful WhatsApp assistant.",
-};
+// Ready-made bot categories. Each one has a starter system prompt the user
+// can edit. Pick "Custom" to type your own category name.
+const PRESETS = [
+  {
+    key: "support",
+    label: "Customer support",
+    prompt:
+      "You are a friendly customer support agent. Answer politely using only the company document.",
+  },
+  {
+    key: "faq",
+    label: "FAQ answering",
+    prompt:
+      "You are an FAQ assistant. Give short, clear answers based on the document.",
+  },
+  {
+    key: "sales",
+    label: "Sales assistant",
+    prompt:
+      "You are a helpful sales assistant. Explain products from the document and warmly encourage the customer.",
+  },
+  {
+    key: "ecommerce",
+    label: "E-commerce shop",
+    prompt:
+      "You are an online shop assistant. Help with product info, prices, availability and orders using only the document.",
+  },
+  {
+    key: "restaurant",
+    label: "Restaurant / Menu",
+    prompt:
+      "You are a restaurant menu helper. Describe dishes, ingredients, prices and recommendations from the menu document.",
+  },
+  {
+    key: "education",
+    label: "Education / Tutor",
+    prompt:
+      "You are a patient tutor. Explain concepts clearly with simple examples, using only the document.",
+  },
+  {
+    key: "healthcare",
+    label: "Healthcare / Clinic",
+    prompt:
+      "You are a clinic assistant. Share clinic hours, services, doctors and procedures from the document. Do not give medical advice.",
+  },
+  {
+    key: "booking",
+    label: "Booking / Appointments",
+    prompt:
+      "You are a booking assistant. Help users with appointment availability, services and policies from the document.",
+  },
+  {
+    key: "hr",
+    label: "HR assistant",
+    prompt:
+      "You are an HR assistant. Answer employee questions about policies, benefits and processes from the document.",
+  },
+  {
+    key: "realestate",
+    label: "Real estate",
+    prompt:
+      "You are a real estate assistant. Share property details, prices and availability from the document.",
+  },
+  {
+    key: "personal",
+    label: "Personal assistant",
+    prompt:
+      "You are a personal assistant. Help the user with information from their document — clearly and concisely.",
+  },
+  {
+    key: "custom",
+    label: "Custom (type your own)",
+    prompt: "You are a helpful WhatsApp assistant.",
+  },
+];
+
+const PRESET_MAP = Object.fromEntries(PRESETS.map((p) => [p.key, p]));
 
 export default function Home() {
   // --- bot creation form state ---
   const [name, setName] = useState("");
-  const [botType, setBotType] = useState("custom");
-  const [systemPrompt, setSystemPrompt] = useState(PROMPT_PRESETS.custom);
+  const [botType, setBotType] = useState("support");
+  const [customCategory, setCustomCategory] = useState(""); // user's own category name
+  const [systemPrompt, setSystemPrompt] = useState(PRESET_MAP.support.prompt);
   const [doc, setDoc] = useState(null); // { fileName, charCount, text }
   const [waPhoneId, setWaPhoneId] = useState(""); // WhatsApp Cloud API number id
   const [uploading, setUploading] = useState(false);
@@ -65,7 +134,7 @@ export default function Home() {
 
   function onTypeChange(value) {
     setBotType(value);
-    setSystemPrompt(PROMPT_PRESETS[value] || PROMPT_PRESETS.custom);
+    setSystemPrompt(PRESET_MAP[value]?.prompt || PRESET_MAP.custom.prompt);
   }
 
   // Upload a file → server extracts the text → we keep the text in state.
@@ -103,12 +172,18 @@ export default function Home() {
     setCreating(true);
     setFormMsg(null);
     try {
+      // Use the user's typed name when they picked "Custom", otherwise the preset label.
+      const finalBotType =
+        botType === "custom"
+          ? customCategory.trim() || "Custom"
+          : PRESET_MAP[botType]?.label || "Custom";
+
       const res = await fetch("/api/bots", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name,
-          botType,
+          botType: finalBotType,
           systemPrompt,
           documentName: doc?.fileName || "",
           documentText: doc?.text || "",
@@ -125,6 +200,7 @@ export default function Home() {
       setName("");
       setDoc(null);
       setWaPhoneId("");
+      setCustomCategory("");
       await loadBots();
     } catch (err) {
       setFormMsg({ type: "error", text: err.message });
@@ -215,11 +291,25 @@ export default function Home() {
             value={botType}
             onChange={(e) => onTypeChange(e.target.value)}
           >
-            <option value="custom">Custom</option>
-            <option value="support">Customer support</option>
-            <option value="faq">FAQ answering</option>
-            <option value="sales">Sales assistant</option>
+            {PRESETS.map((p) => (
+              <option key={p.key} value={p.key}>
+                {p.label}
+              </option>
+            ))}
           </select>
+
+          {botType === "custom" && (
+            <>
+              <label htmlFor="customCat">Your category name</label>
+              <input
+                id="customCat"
+                type="text"
+                placeholder="e.g. Wedding planner, Tour guide, Pet shop…"
+                value={customCategory}
+                onChange={(e) => setCustomCategory(e.target.value)}
+              />
+            </>
+          )}
 
           <label htmlFor="prompt">Instructions (personality)</label>
           <textarea

@@ -29,11 +29,11 @@ const BotSchema = new mongoose.Schema(
 
     name: { type: String, required: true, trim: true },
 
-    // What kind of bot this is — just a label for now.
+    // What kind of bot this is — a free-form label so users can add their own.
     botType: {
       type: String,
-      enum: ["support", "faq", "sales", "custom"],
-      default: "custom",
+      default: "Custom",
+      trim: true,
     },
 
     // Instructions that shape the bot's personality / behaviour.
