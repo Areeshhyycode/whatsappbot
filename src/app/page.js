@@ -175,7 +175,7 @@ export default function Home() {
 
   // Wait until we know the login state, so the UI does not flash.
   if (!authChecked) {
-    return <p style={{ padding: 40, textAlign: "center" }}>Loading…</p>;
+    return <div className="loading-state">Loading…</div>;
   }
 
   return (

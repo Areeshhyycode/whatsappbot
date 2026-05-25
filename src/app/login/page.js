@@ -38,7 +38,8 @@ export default function LoginPage() {
   return (
     <div className="auth-wrap">
       <div className="card auth-card">
-        <h1>🤖 WhatsApp AI Bot Builder</h1>
+        <div className="auth-logo">🤖</div>
+        <h1>WhatsApp AI Bot Builder</h1>
         <p className="note">
           {mode === "login"
             ? "Log in to manage your bots."
